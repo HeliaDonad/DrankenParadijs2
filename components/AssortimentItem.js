@@ -2,13 +2,15 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const AssortimentItem = props => {
+  console.log('props:', props);
+  console.log('assImg:', props.assImg);
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={() => props.onSelectArticle(props.id)}>
+    <TouchableOpacity activeOpacity={0.5} onPress={() => props.onSelectArtikel(props.id)}>
       <View style={styles.assortimentItem}>
         <Image
           style={styles.banner}
           source={{
-            uri: props.banner
+            uri: props.assImg
           }}
         />
         <Text style={styles.title}>{props.title}</Text>
@@ -34,16 +36,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
   },
   banner: {
-    height: 100
+    height: 200
   },
   title: {
     fontWeight: "bold",
-    color: "#D24335",
+    color: "#6547e9",
     fontSize: 16,
     marginTop: 12,
     marginBottom: 12,
     textTransform: "uppercase"
   },
+
   price: {
     marginBottom: 8
   }

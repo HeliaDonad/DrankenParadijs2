@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Platform } from 'react-native';
 
-
-const NewsArticle = props => {
-  const [article, setArticle] = useState({});
-  // console.log(props.articleId);
-  const getArticleData = async () => {
+const ProductArtikel = props => {
+  const [artikel, setArtikel] = useState({});
+  // console.log(props.artikelId);
+  const getArtikelData = async () => {
     try {
       //127.0.0.1 -> surft naar dit toestel
       //10.0.2.2 -> surft naar host toestel
@@ -19,23 +18,23 @@ const NewsArticle = props => {
       else {
         url = "http://drankenparadijs.ddev.site/api/assortiment/";
       }
-      url += props.articleId;
+      url += props.artikelId;
       const response = await fetch(url, {
         "method": "GET"
       });
       const json = await response.json();
-      console.log(json.headerImg);
+      console.log(json.assImg);
       if (Platform.OS == 'android') {
-        json.headerImg = json.headerImg.replace('drankenparadijs.ddev.site', '10.0.2.2:60049');
+        json.assImg = json.assImg.replace('drankenparadijs.ddev.site', '10.0.2.2:60049');
       }
-      setArticle(json);
+      setArtikel(json);
     } catch (error) {
       console.error(error);
     }
   }
 
   useEffect(() => {
-    getArticleData();
+    getArtikelData();
   }, []);
 
   return (
@@ -43,12 +42,12 @@ const NewsArticle = props => {
       <Image
         style={styles.image}
         source={{
-          uri: article.headerImg
+          uri: artikel.assImg
         }}
       />
       <View style={styles.wrapper}>
-        <Text style={styles.title}>{article.title}</Text>
-        <Text style={styles.body}>{article.fullText}</Text>
+        <Text style={styles.title}>{artikel.title}</Text>
+        <Text style={styles.body}>{artikel.fullText}</Text>
       </View>
     </ScrollView >
   );
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    color: "#D24335",
+    color: "#6547e9",
     fontWeight: "bold",
     textTransform: "uppercase",
     marginBottom: 24,
@@ -73,4 +72,4 @@ const styles = StyleSheet.create({
 
   }
 });
-export default NewsArticle;
+export default ProductArtikel;

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, FlatList, TextInput, Platform } from 'react-nat
 import AssortimentItem from '../components/AssortimentItem';
 
 const AssortimentScreen = ({ navigation }) => {
-  const [assortiment, setAssortiment] = useState([]);
+  const [artikels, setArtikel] = useState([]);
 
   const getProductArtikels = async () => {
     try {
@@ -21,7 +21,7 @@ const AssortimentScreen = ({ navigation }) => {
       });
       const json = await response.json();
       console.log(json.items);
-      setAssortiment(json.items);
+      setArtikel(json.items);
     } catch (error) {
       console.error(error);
     }
@@ -36,7 +36,7 @@ const AssortimentScreen = ({ navigation }) => {
       <Text style={styles.title}>Ons Assortiment</Text>
       <FlatList
         style={styles.list}
-        data={assortiment}
+        data={artikels}
         keyExtractor={item => item.id}//gebruik id als key voor de flatlist
         renderItem={({ item }) => {
           if (Platform.OS == 'android') {
@@ -50,7 +50,7 @@ const AssortimentScreen = ({ navigation }) => {
             intro={item.intro}
             banner={item.bannerImg}
             navigation={navigation}
-            onSelectArticle={(selectedId) => { navigation.navigate('Details', { id: selectedId }) }}
+            onSelectArtikel={(selectedId) => { navigation.navigate('Details', { id: selectedId }) }}
           />
         }}
       />
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    color: "#D24335",
+    color: "#6547e9",
     fontWeight: "bold",
     textTransform: "uppercase",
     marginBottom: 8,
