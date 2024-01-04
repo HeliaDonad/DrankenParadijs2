@@ -40,17 +40,17 @@ const AssortimentScreen = ({ navigation }) => {
         keyExtractor={item => item.id}//gebruik id als key voor de flatlist
         renderItem={({ item }) => {
           if (Platform.OS == 'android') {
-            item.bannerImg = item.bannerImg.replace('drankenparadijs.ddev.site', '10.0.2.2:60628');
+            item.assImg = item.assImg.replace('drankenparadijs.ddev.site', '10.0.2.2:60049');
           }
 
-          console.log(item.bannerImg);
+          console.log(item.assImg);
           return <AssortimentItem
             id={item.id}
             title={item.title}
-            intro={item.intro}
-            banner={item.bannerImg}
+            price={item.price}
+            banner={item.assImg}
             navigation={navigation}
-            onSelectArtikel={(selectedId) => { navigation.navigate('Details', { id: selectedId }) }}
+            onSelectArtikel={(selectedId) => { navigation.navigate('Omschrijving', { id: selectedId }) }}
           />
         }}
       />
@@ -61,8 +61,9 @@ const AssortimentScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     padding: 24,
-    backgroundColor: "#F8F6F6",
+    backgroundColor: "#fcfcfc",
   },
+
   list: {
     height: "90%",
   },

@@ -39,15 +39,18 @@ const ProductArtikel = props => {
 
   return (
     <ScrollView>
+      <View style={styles.bannerImage}>
       <Image
         style={styles.image}
         source={{
           uri: artikel.assImg
         }}
       />
+      </View>
       <View style={styles.wrapper}>
         <Text style={styles.title}>{artikel.title}</Text>
-        <Text style={styles.body}>{artikel.fullText}</Text>
+        <Text style={styles.price}>€{artikel.price}</Text>
+        <Text style={styles.text}>{artikel.richText}</Text>
       </View>
     </ScrollView >
   );
@@ -55,21 +58,39 @@ const ProductArtikel = props => {
 
 const styles = StyleSheet.create({
   image: {
-    height: 150,
+    width: 200,
+    height: 300,
+    marginTop: 24,
   },
+
+  bannerImage: {
+    alignItems: 'center', 
+    marginBottom: 12,
+  },
+
   wrapper: {
     padding: 24
   },
+  
   title: {
     fontSize: 24,
     color: "#6547e9",
     fontWeight: "bold",
     textTransform: "uppercase",
     marginBottom: 24,
+    textAlign: 'center',
   },
-  body: {
-    lineHeight: 24
 
-  }
+  text: {
+    lineHeight: 24,
+  },
+
+  price: {
+    marginBottom: 12,
+    textAlign: 'center',
+    fontWeight: "bold",
+    fontSize: 22,
+  },
+
 });
 export default ProductArtikel;
