@@ -5,14 +5,15 @@ import AssortimentItem from '../components/AssortimentItem';
 
 const AssortimentScreen = ({ navigation }) => {
   const [artikels, setArtikel] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredArtikels, setFilteredArtikels] = useState([]);
 
   const getProductArtikels = async () => {
     try {
       let url;
-      if (Platform.OS == 'android') {
+      if (Platform.OS === 'android') {
         url = "http://10.0.2.2:60049/api/assortiment/";
-      }
-      else {
+      } else {
         url = "http://drankenparadijs.ddev.site/api/assortiment/"
       }
 
@@ -20,7 +21,6 @@ const AssortimentScreen = ({ navigation }) => {
         "method": "GET"
       });
       const json = await response.json();
-      //console.log(json.items);
       setArtikel(json.items);
     } catch (error) {
       console.error(error);
@@ -31,30 +31,44 @@ const AssortimentScreen = ({ navigation }) => {
     getProductArtikels();
   }, []);
 
+  useEffect(() => {
+    const filteredProducts = artikels.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredArtikels(filteredProducts);
+  }, [artikels, searchTerm]);
+
   return (
     <View style={styles.screen}>
-      <Text style={styles.title}>Ons Assortiment</Text>
+      <Text style={styles.title}>Dranken</Text>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Zoek op titel..."
+        onChangeText={(text) => setSearchTerm(text)}
+        value={searchTerm}
+      />
       <FlatList
         style={styles.list}
-        data={artikels}
-        keyExtractor={item => item.id}//gebruik id als key voor de flatlist
+        data={filteredArtikels}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-          if (Platform.OS == 'android') {
+          if (Platform.OS === 'android') {
             item.assImg = item.assImg.replace('drankenparadijs.ddev.site', '10.0.2.2:60049');
           }
 
-          //console.log(item.assImg);
-          return <AssortimentItem
-            id={item.id}
-            title={item.title}
-            price={item.price}
-            banner={item.assImg}
-            navigation={navigation}
-            onSelectArtikel={(selectedId) => { navigation.navigate('Omschrijving', { id: selectedId }) }}
-          />
+          return (
+            <AssortimentItem
+              id={item.id}
+              title={item.title}
+              price={item.price}
+              banner={item.assImg}
+              navigation={navigation}
+              onSelectArtikel={(selectedId) => { navigation.navigate('Omschrijving', { id: selectedId }) }}
+            />
+          );
         }}
       />
-    </View >
+    </View>
   );
 }
 
@@ -63,7 +77,6 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: "#fcfcfc",
   },
-
   list: {
     height: "90%",
   },
@@ -74,6 +87,16 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginBottom: 8,
     textAlign: "center"
-  }
+  },
+  searchInput: {
+    height: 40,
+    borderColor: '#6547e9',
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingLeft: 8,
+    marginTop: 12,
+    borderRadius: 8,
+  },
 });
+
 export default AssortimentScreen;
