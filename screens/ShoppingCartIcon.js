@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import { useCart } from '../cartUtils';
 
 const ShoppingCartIcon = () => {
-  const cartItemsCount = 0; 
+  const { cartItemsCount } = useCart();
   const navigation = useNavigation();
 
   return (

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { useCart } from '../cartUtils';
 
 import Artikel from '../components/ProductArtikel';
 
 const ProductScreen = ({ route, navigation }) => {
   const { id } = route.params;
+  const { addToCart } = useCart();
 
   return (
     <View style={styles.screen}>
@@ -13,6 +15,7 @@ const ProductScreen = ({ route, navigation }) => {
       <TouchableOpacity
         style={styles.addbutton}
         onPress={() => {
+          addToCart();
           //navigation.navigate('Winkelmandje')
         }}
       >
@@ -66,4 +69,3 @@ const styles = StyleSheet.create({
 });
 
 export default ProductScreen;
-
