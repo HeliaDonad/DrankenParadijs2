@@ -72,6 +72,8 @@ const AssortimentScreen = ({ navigation }) => {
   );
 }
 
+
+
 const styles = StyleSheet.create({
   screen: {
     padding: 24,

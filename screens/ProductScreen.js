@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 import Artikel from '../components/ProductArtikel';
 
-const ArtikelScreen = ({ route, navigation }) => {
+const ProductScreen = ({ route, navigation }) => {
   const { id } = route.params;
 
   return (
@@ -13,7 +13,7 @@ const ArtikelScreen = ({ route, navigation }) => {
       <TouchableOpacity
         style={styles.addbutton}
         onPress={() => {
-          // Voeg hier de logica toe om het item aan het winkelmandje toe te voegen
+          //navigation.navigate('Winkelmandje')
         }}
       >
         <Text style={styles.buttonText2}>In winkelmandje</Text>
@@ -65,4 +65,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ArtikelScreen;
+export default ProductScreen;
+
