@@ -20,7 +20,7 @@ const AssortimentScreen = ({ navigation }) => {
         "method": "GET"
       });
       const json = await response.json();
-      console.log(json.items);
+      //console.log(json.items);
       setArtikel(json.items);
     } catch (error) {
       console.error(error);
@@ -43,7 +43,7 @@ const AssortimentScreen = ({ navigation }) => {
             item.assImg = item.assImg.replace('drankenparadijs.ddev.site', '10.0.2.2:60049');
           }
 
-          console.log(item.assImg);
+          //console.log(item.assImg);
           return <AssortimentItem
             id={item.id}
             title={item.title}

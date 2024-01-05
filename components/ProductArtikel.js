@@ -23,7 +23,7 @@ const ProductArtikel = props => {
         "method": "GET"
       });
       const json = await response.json();
-      console.log(json.assImg);
+      //console.log(json.assImg);
       if (Platform.OS == 'android') {
         json.assImg = json.assImg.replace('drankenparadijs.ddev.site', '10.0.2.2:60049');
       }
@@ -50,7 +50,8 @@ const ProductArtikel = props => {
       <View style={styles.wrapper}>
         <Text style={styles.title}>{artikel.title}</Text>
         <Text style={styles.price}>€{artikel.price}</Text>
-        <Text style={styles.text}>{artikel.richText}</Text>
+        <Text style={styles.h3}>Omschrijving:</Text>
+        <Text style={styles.text}>{artikel.fullText}</Text>
       </View>
     </ScrollView >
   );
@@ -79,6 +80,12 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginBottom: 24,
     textAlign: 'center',
+  },
+
+  h3: {
+    fontSize: 18,
+    fontWeight: "bold",
+    paddingBottom: 12,
   },
 
   text: {

@@ -21,7 +21,7 @@ const ArtikelScreen = ({ route, navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Assortiment')}
+        onPress={() => navigation.navigate('Ons assortiment')}
       >
         <Text style={styles.buttonText}>Terug naar dranken</Text>
       </TouchableOpacity>
