@@ -8,6 +8,7 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = () => {
     setCartItemsCount(cartItemsCount + 1);
+
   };
 
   const value = {

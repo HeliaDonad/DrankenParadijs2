@@ -16,7 +16,6 @@ const ProductScreen = ({ route, navigation }) => {
         style={styles.addbutton}
         onPress={() => {
           addToCart();
-          //navigation.navigate('Winkelmandje')
         }}
       >
         <Text style={styles.buttonText2}>In winkelmandje</Text>
