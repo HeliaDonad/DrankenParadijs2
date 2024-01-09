@@ -2,7 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Zorg ervoor dat je het juiste pictogrammenpakket importeert
+import { Pressable, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import AssortimentScreen from './screens/AssortimentScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
@@ -14,6 +15,24 @@ import { CartProvider } from './cartUtils';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const TabBarIcon = ({ route, color, size, onPress }) => {
+  let iconName;
+
+  if (route.name === 'Assortiment') {
+    iconName = 'home';
+  } else if (route.name === 'Favorites') {
+    iconName = 'heart-outline';
+  } else if (route.name === 'Settings') {
+    iconName = 'cog';
+  }
+
+  return (
+    <Pressable onPress={onPress}>
+      <Icon name={iconName} size={size} color={color} />
+    </Pressable>
+  );
+};
 
 const AssortimentStack = () => {
   return (
@@ -61,31 +80,23 @@ const App = () => {
   return (
     <CartProvider>
       <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
-              let iconName;
-
-              if (route.name === 'Assortiment') {
-                iconName = 'home';
-              } else if (route.name === 'Favorites') {
-                iconName = 'heart-outline';
-              } else if (route.name === 'Settings') {
-                iconName = 'cog';
-              }
-
-              return <Icon name={iconName} size={size} color={color} />;
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: '#6547e9',
-            inactiveTintColor: 'gray',
-          }}
-        >
-          <Tab.Screen name="Assortiment" component={AssortimentStack} />
-          <Tab.Screen name="Favorites" component={FavoritesScreen} />
-          <Tab.Screen name="Settings" component={SettingsScreen} />
-        </Tab.Navigator>
+        <View style={{ flex: 1, marginVertical: 0 }}>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ color, size }) => (
+                <TabBarIcon route={route} color={color} size={size} />
+              ),
+            })}
+            tabBarOptions={{
+              activeTintColor: '#6547e9',
+              inactiveTintColor: 'gray',
+            }}
+          >
+            <Tab.Screen name="Assortiment" component={AssortimentStack} />
+            <Tab.Screen name="Favorites" component={FavoritesScreen} />
+            <Tab.Screen name="Settings" component={SettingsScreen} />
+          </Tab.Navigator>
+        </View>
       </NavigationContainer>
     </CartProvider>
   );
