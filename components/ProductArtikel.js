@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, Platform, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const ProductArtikel = props => {
   const [artikel, setArtikel] = useState({});
-  // console.log(props.artikelId);
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const getArtikelData = async () => {
     try {
-      //127.0.0.1 -> surft naar dit toestel
-      //10.0.2.2 -> surft naar host toestel
-
       let url;
-      if (Platform.OS == 'android') {
-        //ddev describe om port number te weten te komen
-
+      if (Platform.OS === 'android') {
         url = "http://10.0.2.2:60049/api/assortiment/";
-      }
-      else {
+      } else {
         url = "http://drankenparadijs.ddev.site/api/assortiment/";
       }
       url += props.artikelId;
@@ -23,8 +19,7 @@ const ProductArtikel = props => {
         "method": "GET"
       });
       const json = await response.json();
-      //console.log(json.assImg);
-      if (Platform.OS == 'android') {
+      if (Platform.OS === 'android') {
         json.assImg = json.assImg.replace('drankenparadijs.ddev.site', '10.0.2.2:60049');
       }
       setArtikel(json);
@@ -37,15 +32,22 @@ const ProductArtikel = props => {
     getArtikelData();
   }, []);
 
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <ScrollView>
+        <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
+          <Icon name={isFavorite ? 'heart' : 'heart-outline'} size={48} color={isFavorite ? '#6547e9' : 'black'} />
+        </TouchableOpacity>
       <View style={styles.bannerImage}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: artikel.assImg
-        }}
-      />
+        <Image
+          style={styles.image}
+          source={{
+            uri: artikel.assImg
+          }}
+        />
       </View>
       <View style={styles.wrapper}>
         <Text style={styles.title}>{artikel.title}</Text>
@@ -53,7 +55,7 @@ const ProductArtikel = props => {
         <Text style={styles.h3}>Omschrijving:</Text>
         <Text style={styles.text}>{artikel.fullText}</Text>
       </View>
-    </ScrollView >
+    </ScrollView>
   );
 }
 
@@ -65,14 +67,14 @@ const styles = StyleSheet.create({
   },
 
   bannerImage: {
-    alignItems: 'center', 
+    alignItems: 'center',
     marginBottom: 12,
   },
 
   wrapper: {
     padding: 24
   },
-  
+
   title: {
     fontSize: 24,
     color: "#6547e9",
@@ -100,5 +102,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
 
+  favoriteButton: {
+    position: 'absolute',
+    top: 22,
+    right: 22,
+    paddingBottom: 20,
+  },
 });
+
 export default ProductArtikel;
