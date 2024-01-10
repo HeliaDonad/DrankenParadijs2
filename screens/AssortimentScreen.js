@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fcfcfc",
   },
   list: {
-    height: "90%",
+    height: "80%",
   },
   title: {
     fontSize: 24,
