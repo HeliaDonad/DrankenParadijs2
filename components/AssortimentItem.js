@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useFavorites } from '../FavoriteContext';
 
-const AssortimentItem = props => {
+const AssortimentItem = (props) => {
+  const { addToFavorites, removeFromFavorites } = useFavorites();
   const [isFavorite, setIsFavorite] = useState(false);
 
   const toggleFavorite = () => {
+    if (isFavorite) {
+      removeFromFavorites(props.id);
+    } else {
+      addToFavorites({
+        id: props.id,
+        title: props.title,
+        banner: props.banner,
+        price: props.price,
+      });
+    }
     setIsFavorite(!isFavorite);
   };
 
