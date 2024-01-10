@@ -1,10 +1,12 @@
+// ProductArtikel.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useFavorites } from '../FavoriteContext';
 
-const ProductArtikel = props => {
+const ProductArtikel = (props) => {
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const [artikel, setArtikel] = useState({});
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const getArtikelData = async () => {
     try {
@@ -33,14 +35,23 @@ const ProductArtikel = props => {
   }, []);
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+    if (isFavorite(props.artikelId)) {
+      removeFromFavorites(props.artikelId);
+    } else {
+      addToFavorites({
+        id: props.artikelId,
+        title: artikel.title,
+        banner: artikel.assImg,
+        price: artikel.price,
+      });
+    }
   };
 
   return (
     <ScrollView>
-        <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
-          <Icon name={isFavorite ? 'heart' : 'heart-outline'} size={48} color={isFavorite ? '#6547e9' : 'black'} />
-        </TouchableOpacity>
+      <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
+        <Icon name={isFavorite(props.artikelId) ? 'heart' : 'heart-outline'} size={48} color={isFavorite(props.artikelId) ? '#6547e9' : 'black'} />
+      </TouchableOpacity>
       <View style={styles.bannerImage}>
         <Image
           style={styles.image}

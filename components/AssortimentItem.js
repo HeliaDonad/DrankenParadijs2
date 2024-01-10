@@ -1,14 +1,14 @@
+// AssortimentItem.js
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFavorites } from '../FavoriteContext';
 
 const AssortimentItem = (props) => {
-  const { addToFavorites, removeFromFavorites } = useFavorites();
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
 
   const toggleFavorite = () => {
-    if (isFavorite) {
+    if (isFavorite(props.id)) {
       removeFromFavorites(props.id);
     } else {
       addToFavorites({
@@ -18,7 +18,6 @@ const AssortimentItem = (props) => {
         price: props.price,
       });
     }
-    setIsFavorite(!isFavorite);
   };
 
   return (
@@ -35,7 +34,7 @@ const AssortimentItem = (props) => {
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.price}>€{props.price}</Text>
         <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
-          <Icon name={isFavorite ? 'heart' : 'heart-outline'} size={32} color={isFavorite ? '#6547e9' : 'black'} />
+          <Icon name={isFavorite(props.id) ? 'heart' : 'heart-outline'} size={32} color={isFavorite(props.id) ? '#6547e9' : 'black'} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
