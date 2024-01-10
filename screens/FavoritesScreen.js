@@ -1,25 +1,35 @@
+// FavoritesScreen.js
+
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
 import { useFavorites } from '../FavoriteContext';
 
+// Stap 1: Definieer het FavoritesScreen-component
 const FavoritesScreen = () => {
+  // Stap 2: Haal de favorieten op uit de useFavorites-hook
   const { favorites } = useFavorites();
 
+  // Stap 3: Render het component met een tekst en een FlatList voor weergave van favorieten
   return (
     <View style={styles.screen}>
+      {/* Stap 4: Voeg een tekst toe voor de favorieten */}
       <Text style={styles.title2}>Favorieten</Text>
+      {/* Stap 5: Gebruik FlatList om de favorieten weer te geven */}
       <FlatList
-      style={styles.list}
+        style={styles.list}
         data={favorites}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-            <View style={styles.assortimentItem}>
+          // Stap 6: Render een assortimentItem voor elk favoriet item 
+          <View style={styles.assortimentItem}>
             <View style={styles.bannerContainer}>
-              <Image style={styles.banner} source={{uri: item.banner}}
-              />
+              {/* Stap 7: Voeg een afbeelding toe met de gegeven URI */}
+              <Image style={styles.banner} source={{uri: item.banner}} />
             </View>
+            {/* Stap 8: Voeg titel en prijs toe */}
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.price}>€{item.price}</Text>
+            {/* Stap 9: Toon de afbeeldings-URL in de console voor controle */}
             {console.log("Image URL:", item.banner)}
           </View>
         )}
@@ -28,6 +38,7 @@ const FavoritesScreen = () => {
   );
 };
 
+// Stap 10: Definieer stijlen met StyleSheet.create
 const styles = StyleSheet.create({
   screen: {
     padding: 24,
@@ -61,6 +72,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     textAlign: "center",
   },
+  
   banner: {
     width: 200,
     height: 300,
@@ -86,4 +98,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Stap 11: Exporteer het FavoritesScreen-component als standaard export
 export default FavoritesScreen;

@@ -1,12 +1,16 @@
 // AssortimentItem.js
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFavorites } from '../FavoriteContext';
 
+// Stap 1: Definieer het AssortimentItem-component met de ontvangen props
 const AssortimentItem = (props) => {
+  // Stap 2: Haal addToFavorites, removeFromFavorites, en isFavorite op uit de useFavorites-hook
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
 
+  // Stap 3: Definieer de toggleFavorite-functie om items toe te voegen/verwijderen uit favorieten
   const toggleFavorite = () => {
     if (isFavorite(props.id)) {
       removeFromFavorites(props.id);
@@ -20,9 +24,11 @@ const AssortimentItem = (props) => {
     }
   };
 
+  // Stap 4: Render het component met TouchableOpacity en het assortimentItem-view
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={() => props.onSelectArtikel(props.id)}>
       <View style={styles.assortimentItem}>
+        {/* Stap 5: Voeg een banner toe met de gegeven URI */}
         <View style={styles.bannerContainer}>
           <Image
             style={styles.banner}
@@ -31,8 +37,10 @@ const AssortimentItem = (props) => {
             }}
           />
         </View>
+        {/* Stap 6: Voeg titel en prijs toe */}
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.price}>€{props.price}</Text>
+        {/* Stap 7: Voeg een favorietenknop toe met een hartpictogram */}
         <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
           <Icon name={isFavorite(props.id) ? 'heart' : 'heart-outline'} size={32} color={isFavorite(props.id) ? '#6547e9' : 'black'} />
         </TouchableOpacity>
@@ -41,6 +49,7 @@ const AssortimentItem = (props) => {
   );
 };
 
+// Stap 8: Definieer stijlen met StyleSheet.create
 const styles = StyleSheet.create({
   assortimentItem: {
     padding: 12,
@@ -86,4 +95,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Stap 9: Exporteer het AssortimentItem-component als standaard export
 export default AssortimentItem;
